@@ -667,9 +667,26 @@ for i in range(1, num+1):
 
 
 
+### 2007. 패턴 마디의 길이
 
 
-```
 
+```python
+trial = int(input())
+for i in range(trial):
+    string = input()
+    words = ''
+    answer= ''
+    for idx in range (0, 30, 2):
+        words += string[ idx : idx+2]
+        num=len(words)//2
+        if words[:num]==words[num:]:
+            answer += words[:num]
+            break
+    print(f'#{i+1} {len(answer)}')
+            
+        
+
+   
 ```
 
