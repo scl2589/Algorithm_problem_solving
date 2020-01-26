@@ -685,8 +685,96 @@ for i in range(trial):
             break
     print(f'#{i+1} {len(answer)}')
             
-        
+```
 
-   
+
+
+### 2005. 파스칼의 삼각형
+
+```python
+trial = int(input())
+
+for i in range(0, trial):
+    height = int(input())
+    prev_dict = [1, 1]
+    print(f'#{i+1}')
+    for j in range (0, height):
+        if j  ==  0:
+            print('1')
+        elif j  ==  1:
+            print('1 1')
+        elif j >=  2:
+            new_dict= [1]      
+            for idx in range(1, j):
+                sum = prev_dict[idx-1] + prev_dict[idx]        
+                new_dict.append(sum)
+            new_dict.append(1)
+            print(*new_dict)
+            prev_dict = new_dict
+```
+
+
+
+
+
+### 2001. 파리 퇴치
+
+```python
+trial = int(input())
+
+for i in range(trial):
+    n, m = map(int, input().split(' '))
+    list1 = []
+    for _ in range(n):
+        numbers = list(map(int,input().split(' ')))
+        list1.append(numbers)
+    max = 0
+    for j in range(0, n-m+1):      
+        for k in range(0, n-m+1):          
+            sum = 0
+            for l in range(0, m): #가로
+                for u in range (0, m): #세로
+                #sum += list1[j][l-1]+list1[j][l]
+                	sum += list1[j+u][k+l]
+            if sum >= max:
+                max = sum
+    print(f'#{i+1} {max}')
+```
+
+
+
+### 1989. 초심자의 회문 검사
+
+```python
+trial = int( input() )
+for i in range(trial):
+    word = input()
+    reverse=''
+    for letter in range(len(word)-1,-1,-1):
+        reverse += word[letter]
+    if reverse == word:
+        print(f'#{i+1} 1')
+    else:
+         print(f'#{i+1} 0')
+```
+
+
+
+
+
+### 1986. 지그재그 숫자
+
+```python
+trial = int(input())
+for i in range(trial):
+    num = int(input())
+    sum = 0 
+    for number in range(1, num+1):
+        if number % 2 == 1:
+            sum += number
+        else:
+            sum -= number
+    print(f'#{i+1} {sum}')
+            
 ```
 
