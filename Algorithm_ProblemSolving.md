@@ -778,3 +778,88 @@ for i in range(trial):
             
 ```
 
+
+
+### 1984. 중간 평균값 구하기
+
+```python
+trial = int(input())
+for i in range(trial):
+    list1 = list(map(int, input().strip().split(' ')))
+    list1.sort()
+    list1.remove(min(list1))
+    list1.remove(max(list1))
+    result = format(round(sum(list1)/len(list1),0),".0f")
+    print(f"#{i+1} {result}")
+    
+```
+
+
+
+
+
+### 1983. 조교의 성적 매기기
+
+```python
+import math
+trial = int(input())
+for i in range(trial):
+    students, studentnum = map(int, input().split(' '))
+    list1=[]
+    grade= ['D0','C-','C0','C+', 'B-', 'B0', 'B+', 'A-', 'A0', 'A+'] 
+    for _ in range(students):
+        list1.append(list(map(int,input().strip().split(' '))))
+    scores = []
+    for j in range(students):       
+        scores.append(list1[j][0]*0.35+list1[j][1]*0.4+list1[j][2]*0.2)
+        scores.sort()
+
+    idx = scores.index(list1[studentnum-1][0]*0.35+list1[studentnum-1][1]*0.4+list1[studentnum-1][2]*0.2)
+
+    print(f'#{i+1} {grade[idx//((len(scores)//10)) ] }')
+
+```
+
+
+
+### 1979. 어디에 단어가 들어갈 수 있을까
+
+```python
+trial = int(input())
+for i in range(trial):
+    n, k = map(int, input().split(' '))
+    puzzle = []
+
+
+    for j in range(n):
+        line = list(map(int,input().split()))
+        puzzle.append(line)
+
+    row_count, col_count = 0, 0
+
+    for vertical in range(n):  # 가로 살펴보기
+        count = 0
+        for horizontal in range(n):
+            if puzzle[vertical][horizontal]==1:
+                count += 1
+            if horizontal == n-1 or puzzle[vertical][horizontal]==0:
+                if count==k:
+                    row_count +=1
+                count = 0
+
+
+    for horizontal in range(n):  # 세로 살펴보기
+        count = 0
+        for vertical in range(n):
+            if puzzle[vertical][horizontal]==1:
+                count += 1
+            if vertical == n-1 or puzzle[vertical][horizontal]==0:
+                if count == k:
+                    col_count += 1
+                count = 0
+
+    print(f'#{i + 1} {row_count + col_count}')
+
+
+```
+
