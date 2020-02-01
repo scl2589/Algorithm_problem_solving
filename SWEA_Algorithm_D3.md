@@ -125,7 +125,26 @@ for tc in range(1, trial + 1):
 ### 1208. Flatten
 
 ```python
+for tc in range(1, 11):
+    # 덤프 횟수 받기
+    dumps = int(input())
 
+    # 상자 높이 받기
+    heights = list(map(int, input().split()))
+
+    # 덤프 횟수 만큼 덤프 실행하기
+    for i in range(dumps):
+        highest = max(heights)
+        lowest = min(heights)
+        highindex = heights.index(highest)
+        lowindex = heights.index(lowest)
+        heights[highindex] -= 1
+        heights[lowindex] += 1
+
+    result = max(heights) - min(heights)
+
+    # 최고점, 최저점 반환하기
+    print('#{} {}'.format(tc, result))
 ```
 
 
