@@ -658,6 +658,378 @@ for tc in range(1, trial + 1):
 
 
 
+### 1229. 암호문2
+
+```python
+for tc in range(1, 11):
+    lenofpw = int(input())
+    passwords = list(map(str, input().split()))
+    lenofcmd = int(input())
+    commands = list(map(str, input().split()))
+
+    for i in range(len(commands)):
+        if commands[i] == 'I':
+            # 추가를 해야할 숫자 (숫자 다음에 추가) , 숫자 삽입 개수, 삽입해야할 숫자 받기
+            location = int(commands[i + 1]) 
+            numsofcmd = int(commands[i + 2])
+
+            # 암호에 숫자 삽입하기
+            for u in range(numsofcmd):
+                passwords.insert(location + u, commands[i + 3 + u])
+
+        # 삭제를 해야할 숫자 (숫자 다음부터 삭제) , 삭제 개수 받기
+        elif commands[i] == 'D':
+            location = int(commands[i + 1]) 
+            numstodel = int(commands[i + 2])
+
+            # 암호 숫자 삭제하기
+            for i in range(numstodel):
+                # del passwords[location: location + numstodel]
+                del passwords[location]
+
+
+
+    print('#{} {}'.format(tc, ' '.join(passwords[:10])))
+
+
+```
+
+
+
+### 5431. 민석이의 과제 체크하기
+
+```python
+trial = int(input())
+for tc in range(1, trial+1):
+    N, K = map(int, input().split())
+    submitted = list(map(int, input().split()))
+
+    #학생 번호를 정렬하는 arr를 만들자
+    students = [i for i in range(1, N+1)]
+
+    #제출한 학생을 array에서 삭제하자
+    for i in submitted:
+        if i in students:
+            students.remove(i)
+
+    print('#{} {}'.format(tc, ' '.join(map(str, students))))xxxxxxxxxx trial = int(input())for tc in range(1, trial+1):    N, K = map(int, input().split())    submitted = list(map(int, input().split()))    #학생 번호를 정렬하는 arr를 만들자    students = [i for i in range(1, N+1)]    #제출한 학생을 array에서 삭제하자    for i in submitted:        if i in students:            students.remove(i)    print('#{} {}'.format(tc, ' '.join(map(str, students))))ㅇpython
+```
+
+
+
+
+
+### 4466. 최대 성적표 만들기
+
+```python
+trial = int(input())
+for tc in range(1, trial+1):
+    N, K = map(int, input().split())
+    scores = list(map(int, input().split()))
+
+    ascending= sorted(scores)
+    total = sum(ascending [-1:-1-K:-1] )
+
+    print('#{} {}'.format(tc, total))
+```
+
+
+
+
+
+### 3142. 영준이와 신비한 뿔의 숲
+
+```python
+trial = int(input())
+for tc in range(1, trial+1):
+    #N개의 뿔, M마리의 짐승
+    #유니콘은 뿔 1개, 트윈혼은 뿔 2개
+    N, M = map(int, input().split())
+
+    #연립방정식을 이용하자
+    # x + y = M
+    # 2x + y = N
+    # 2x + 2y = 2M
+
+    twinhorn = N-M
+    unicorn = 2*M-N
+
+    print('#{} {} {}'.format(tc, unicorn, twinhorn ))
+
+
+```
+
+
+
+
+
+### 5515. 2016년 요일 맞추기
+
+```python
+trial = int(input())
+for tc in range(1, trial+1):
+    m, d = map(int, input().split())
+    days=[31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+
+    #1월 1일이 금요일이었다..
+
+    #먼저 일수를 구하자
+    total = 0
+
+    #1월일경우 d만 추가
+    #4를 추가하는 이유는 7로 나눴을 때 월요일이 나온다면 0으로 만들기 위해서..
+    if m == 1:
+        total += d - 1 + 4
+    else:
+        total += sum(days[:m-1]) + d -1 + 4
+
+    #월요일이면 0, 화요일이면 1, 수요일이면 2, 목요일이면 3, 금요일이면 4, 토요일이면 5, 일요일이면 6
+    result = total % 7
+    print('#{} {}'.format(tc, result))
+
+
+
+```
+
+
+
+### 5162. 두가지 빵의 딜레마
+
+```python
+trial = int(input())
+for tc in range(1, trial+1):
+    A, B, C = map(int, input().split())
+    if A > B:
+        cheap = B
+    else:
+        cheap = A
+
+    print('#{} {}'.format(tc, C//cheap))
+```
+
+
+
+
+
+
+
+### 5549. 홀수일까 짝수일까
+
+```python
+trial = int(input())
+for tc in range(1, trial+1):
+    num = int(input())
+    if num % 2:
+        print('#{} Odd'.format(tc))
+    else:
+        print('#{} Even'.format(tc))
+```
+
+
+
+
+
+
+
+### 6692. 다솔이의 월급 상자
+
+```python
+trial = int(input())
+for tc in range(trial):
+    n = int(input())
+    total = 0
+    for i in range(n):
+        p, x = map(float, input().split(' '))
+        total += p * x
+
+    print('#{0} {1}'.format(tc+1,total))
+
+```
+
+
+
+
+
+
+
+### 1221. GNS
+
+```python
+trial = int(input())
+for tc in range(1, trial+1):
+    T, length = map(str, input().split())
+    numbers = list(map(str, input().split()))
+    dictionary = {
+        "ZRO" : 0,
+        "ONE" : 0,
+        "TWO" : 0,
+        "THR" : 0,
+        "FOR" : 0,
+        "FIV" : 0,
+        "SIX" : 0,
+        "SVN" : 0,
+        "EGT" : 0,
+        "NIN" : 0,
+    }
+
+    for i in numbers:
+        dictionary[i] += 1
+
+    onlykeys = list(dictionary.keys())
+
+    print('#{}'.format(tc))
+    for j in range(len(dictionary)):
+         print((onlykeys[j]+' ') * dictionary[onlykeys[j]], end = ' ')
+```
+
+
+
+### 5789. 현주의 상자 바꾸기
+
+```python
+trial = int(input())
+for tc in range(1, trial+1):
+    N, Q = map(int, input().split())
+    commands = [0] * N
+    for i in range(Q):
+        l, r = map(int,input().split())
+
+        for j in range(l-1, r):
+            commands[j] = i+1
+
+    print('#{} {}'.format(tc, ' '.join(map(str,commands))))
+```
+
+
+
+
+
+
+
+### 5356. 의석이의 세로로 말해요
+
+```python
+trial = int(input())
+for tc in range(1, trial+1):
+    arr = []
+    length = []
+    for i in range(5):
+        temp = list(map(str, input()))
+        arr.append(temp)
+        length.append(len(temp))
+
+
+
+    string = ''
+    # 리스트 중 길이가 가장 큰 값으로 range 설정하기 (그래야 index error 피해감)
+    for j in range(max(length)):
+        for i in range(len(arr)):
+            #해당 인덱스에 값이 있을 떄만 결과값에 포함시키고 그렇지 않은경우 패스
+            if j<=len(arr[i])-1 : 
+                string += arr[i][j]
+            else:
+                pass
+
+    print('#{} {}'.format(tc, string))
+
+```
+
+
+
+
+
+
+
+### 4676. 늘어지는 소리 만들기
+
+```python
+trial = int(input())
+for tc in range(1, trial+1):
+    string = input()
+    numofhyphen = int(input())
+    location =  list(map(int,input().split()))
+
+    #해당 위치에 몇개의 hyphen을 넣어야하는지 파악하기 위해 array 만들기
+    array = [0] * (len(string)+1)
+
+    for i in location:
+        array[i] += 1
+
+    result = ''
+
+    for i in range(len(string)+1):
+        if i != len(string):
+            #0 이라면 input 으로 받은 letter 만 넣기
+            if array[i] == 0:
+                result += string[i]
+            #하이픈을 넣을 위치가 있다면 하이픈을 갯수만큼 넣고 letter을 넣기
+            else:
+                result += array[i] * '-' + string[i]         
+        #하이픈을 넣을 위치로 맨 끝이 있다면 넣기
+        else:
+            result += array[i] * '-'
+
+    print('#{} {}'.format(tc, result))
+```
+
+
+
+### 4299. 태혁이의 사랑은 타이밍
+
+```python
+trial = int(input())
+for tc in range(1, trial+1):
+    D, H, M = map(int, input().split())
+    if D < 11 or (D == 11 and H < 11) or (D==11 and H ==11 and M <11):
+        print('#{} -1'.format(tc))
+    else:
+        time = (D-11)* 60 * 24+ (H-11)  * 60 + M-11
+        print('#{} {}'.format(tc, time))
+```
+
+
+
+
+
+### 3499. 퍼펙트셔플
+
+```python
+trial = int(input())
+for tc in range(1, trial + 1):
+    N = int(input())
+    cards = list(map(str, input().split()))
+
+    final = []
+    avg = len(cards)//2
+    if len(cards) % 2 :
+        firstdeck = cards[:avg+1]
+        lastdeck = cards[avg+1:]
+    else:
+        firstdeck = cards[:avg]
+        lastdeck = cards[avg:]
+    for i in range(len(firstdeck)):
+        final.append(firstdeck[i])
+        if len(lastdeck) > i:
+             final.append(lastdeck[i])
+    
+    print('#{} {}'.format(tc, ' '.join(map(str, final))))
+
+```
+
+
+
+
+
+### 1
+
+```python
+
+```
+
+
+
+
+
 ### 5607. 조합
 
 ```python
@@ -666,14 +1038,6 @@ for tc in range(1, trial + 1):
 
 
 
-### 5607. 조합
-
-```python
-ㅇ
-```
-
-
-
 
 
 ### 5607. 조합
@@ -681,26 +1045,4 @@ for tc in range(1, trial + 1):
 ```python
 ㅇ
 ```
-
-
-
-
-
-### 5607. 조합
-
-```python
-ㅇ
-```
-
-
-
-
-
-### 5607. 조합
-
-```python
-ㅇ
-```
-
-
 
