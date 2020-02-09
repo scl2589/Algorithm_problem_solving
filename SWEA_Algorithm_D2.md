@@ -778,4 +778,185 @@ for i in range(trial):
 
 
 
-### 
+### 9490. 풍선팡
+
+```python
+T = int(input())
+ 
+dx = [0, 0, 1, -1]
+dy = [1, -1, 0, 0]
+for tc in range(1, T + 1):
+    N, M = map(int, input().split())
+    arr = []
+    for i in range(N):
+        arr.append(list(map(int, input().split())))
+    total = []
+    for x in range(N):
+        for y in range(M):
+            center = arr[x][y]
+            summation = center
+            for i in range(4):
+                for j in range(1, center+1):
+                    changed_x = x + dx[i]*j
+                    changed_y = y + dy[i]*j
+                    if 0 <= changed_x < N and 0<=changed_y<M:
+                        summation += arr[changed_x][changed_y]
+ 
+            total.append(summation)
+ 
+ 
+    print('#{} {}'.format(tc, max(total)))
+```
+
+
+
+
+
+### 9489. 고대 유적
+
+```python
+T = int(input())
+for tc in range(1, T + 1):
+    N, M = map(int, input().split())
+    arr = [list(map(int, input().split())) for _ in range(N)]
+ 
+    total = 0
+    #가로 살펴보기
+    for i in range(N):
+        count = 0
+        for j in range(M):
+            if arr[i][j] == 1:
+                count += 1
+            else:
+                if count > total and count >= 2:
+                    total = count
+                count = 0
+            if count > total and count >= 2:
+                total = count
+ 
+ 
+    #세로 살펴보기
+    for j in range(M):
+        for i in range(N):
+            if arr[i][j] == 1:
+                count += 1
+            else:
+                if count > total and count >= 2:
+                    total = count
+                count = 0
+            if count > total and count >=2:
+                total = count
+    print('#{} {}'.format(tc, total))
+
+```
+
+
+
+
+
+### 9476. 우주선 착륙
+
+```python
+T = int(input())
+dx= [1, -1,-1, 1, 0, 0 ,1, -1]
+dy =[1, 1,-1, -1 , 1, -1, 0, 0]
+ 
+for tc in range(1, T + 1):
+    #8칸중 가장 높은 곳과 낮은 곳의 차이 d가 K이하여야한다.
+    #본체가 위차한 칸은 8칸 중 가장 낮은 칸과 같거나 높고, 높이 차이 e가 H이하여야한다.
+    N, M, K, H = map(int, input().split())
+    arr = [list(map(int, input().split())) for _ in range(N)]
+    count = 0
+    for x in range(1, N-1):
+        for y in range(1, M-1):
+            surrounding = []
+            for i in range(8):
+                surrounding.append(arr[x+dx[i]][y+dy[i]])
+            if max(surrounding)-min(surrounding) <= K and 0 <= arr[x][y]-min(surrounding) <= H:
+                count +=1
+ 
+    print('#{} {}'.format(tc, count))
+
+```
+
+
+
+
+
+### 8706. 당근 수확 2
+
+```python
+T = int(input())
+for tc in range(1, T + 1):
+    # M은 수레에 실을 수 있는 용량
+    N, M = map(int, input().split())
+    carrots = list(map(int, input().split()))
+ 
+    distance = 0
+    carriage = 0
+ 
+    i = 1
+ 
+    while True:
+        if carrots[i-1]==0 and carriage!=0:
+            distance += 1
+            i += 1
+            continue
+        if carrots[i-1]==0 and carriage == 0:
+            i+=1
+        # 당근이 M보다 많은 경우
+        if carrots[i - 1] > M:
+            if carriage == 0:
+                # 밭까지 가는 거리 추가
+                distance += i
+            # 밭에 있는 당근 담기
+            # carriage가 M만큼 될때까지 넣고,
+            carrots[i - 1] -= M - carriage
+            carriage += M - carriage
+            # carriage가 꽉찬다면 0으로 바꿔주기
+            carriage = 0
+            # 다시 원점으로 돌아오는 거리 추가
+            distance += i
+        else:
+            if i == N + 1:
+                distance += i
+                break
+            if carriage == 0:
+                # 밭까지 가는 거리 추가
+                distance += i
+                carriage = carrots[i-1]
+                carrots[i-1] = 0
+            elif carriage != 0:
+                carriage2 =0
+                #Carriage에 들어갈 자리보다 현재 밭에 있는 당근 개수가 더 클경우
+                if carrots[i-1] >= M - carriage: ###
+                    carrots[i-1] -= M- carriage
+                    #다시 되돌아가기
+                    distance += i
+                    #carriage reset
+                    carriage = 0
+                else:
+                    carriage2 = carrots[i-1]
+                    carrots[i-1] -= carriage2
+                    carriage += carriage2
+ 
+ 
+            # 현재 밭에 당근이 0개 있을 경우
+            if carrots[i - 1] == 0:
+                # 만약 carriage가 M만큼 찼다면 다시 돌아가는만큼 distance 더해주기
+                if i == N:
+                    distance += i
+                    break
+                elif carriage == M:
+                    distance += i
+                    carriage = 0
+                    i += 1
+                # carriage 가 꽉차지 않았다면 distance 1 더하기
+                elif carriage != M and i != N:
+                    distance += 1
+                    i += 1
+ 
+ 
+    print('#{} {}'.format(tc, distance))
+```
+

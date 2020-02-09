@@ -606,6 +606,25 @@ for i in range(num,-1,-1):
 
 
 
+### 9386. 연속한 1의 개수
 
+```python
+T= int(input())
+for tc in range(1, T+1):
+    n = int(input())
+    numbers = input()
+ 
+    count = 0
+    total = []
+ 
+    for i in range(n):
+        if numbers[i]=='1':
+            count += 1
+        elif numbers[i] == '0':
+            total.append(count)
+            count = 0
+        if i == n-1:
+            total.append(count)
+    print('#{} {}'.format(tc, max(total)))
+```
 
-### 
