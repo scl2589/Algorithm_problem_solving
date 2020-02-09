@@ -960,3 +960,106 @@ for tc in range(1, T + 1):
     print('#{} {}'.format(tc, distance))
 ```
 
+
+
+
+
+### 8810. 당근 옆 고구마 밭
+
+```python
+T= int(input())
+for tc in range(1, T+1):
+    N = int(input())
+    sweet = list(map(int,input().split()))
+
+    root_count = 0
+    small_root_list = [sweet[0]]
+    big_root_list = []
+    i = 1
+    prev = sweet[0]
+
+    while True:
+        if i == N:
+            break
+        if sweet[i] > prev:
+            small_root_list.append(sweet[i])
+            if i == N-1  and len(small_root_list)>=2:
+                big_root_list.append(small_root_list)
+            prev = sweet[i]
+            i += 1
+
+        else:
+            if len(small_root_list)>=2:
+                big_root_list.append(small_root_list)
+                small_root_list = list()
+                small_root_list.append(sweet[i])
+            prev = sweet[i]
+            i += 1
+
+
+    length = []
+    for i in big_root_list:
+        length.append(len(i))
+
+    total = 0
+    for i, value in enumerate(length):
+        if value == max(length):
+            if sum(big_root_list[i]) > total:
+                total = sum(big_root_list[i])
+
+    print('#{} {} {}'.format(tc, len(big_root_list), total))
+
+
+
+
+```
+
+
+
+
+
+### 8797. 당근수확4
+
+```python
+def rotate_90(arr, N):
+    new_arr = [[0]*N for _ in range(N)]
+    for i in range(N):
+        for j in range(N):
+            new_arr[j][N-1-i]=arr[i][j]
+    return new_arr
+
+def get_summation(arr, N):
+    summation = 0
+    for i in range(N//2):
+        for j in range(1+i, N-1-i):
+            summation += arr[i][j]
+    return summation
+
+
+T= int(input())
+for tc in range(1, T+1):
+    N = int(input())
+    arr = [list(map(int, input().split())) for _ in range(N)]
+
+    total = list()
+
+    #위쪽 구하기
+    total.append(get_summation(arr, N))
+
+    #왼쪽 구하기
+    new_arr = rotate_90(arr, N)
+    total.append(get_summation(new_arr, N))
+
+    #아래쪽 구하기
+    new_arr = rotate_90(new_arr, N)
+    total.append(get_summation(new_arr, N))
+
+    #오른쪽 구하기
+    new_arr = rotate_90(new_arr, N)
+    total.append(get_summation(new_arr, N))
+
+
+    print('#{} {}'.format(tc, max(total)-min(total)))
+
+```
+
