@@ -190,103 +190,36 @@ print(max(area))
 
 ```python
 num = int(input())
-#dices = [list(map(int, input().split())) for _ in range(num)]
 dices = []
 for _ in range(num):
-    temp = list(map(int, input().split()))
-    dictionary = {}
-    for i in range(6):
-        if i == 0 :
-            dictionary[temp[0]]=temp[5]
-        elif i == 1:
-            dictionary[temp[1]]=temp[3]
-        elif i == 2:
-            dictionary[temp[2]]=temp[4]
-        elif i == 3:
-            dictionary[temp[3]]=temp[1]
-        elif i == 4:
-            dictionary[temp[4]]=temp[2]
-        else:
-            dictionary[temp[5]]=temp[0]
-        dices.append(dictionary)
+    dices.append(list(map(int, input().split())))
 
-result = []
-#6개 각각의 베이스
-for i in range(1, 7):
-    base = dices[0][i]
-    for idx, value in enumerate(dices):
+facing = {0:5, 1:3, 2:4, 3:1, 4:2, 5:0}
+maximum = 0
+
+
+total = []
+# 6개 각각의 베이스
+for i in range(6):
+    result = []
+    ref = [1, 2, 3, 4, 5, 6]
+    ref.remove(dices[0][i])
+    next = dices[0][facing[i]]
+    ref.remove(dices[0][facing[i]])
+    result.append(max(ref))
+
+    for j in range(1, len(dices)):
         ref = [1, 2, 3, 4, 5, 6]
-        for j in range(1, 7):
-            ref.remove(base)
-            
-            #다음 베이스가 된당!
-            #base = value.get(i)
+        ref.remove(next)
+        next = dices[j][facing[dices[j].index(next)]]
+        ref.remove(next)
+        result.append(max(ref))
+    result = sum(result)
+    if maximum < result:
+        maximum = result
 
-            ref.remove(i)
-            side = max(ref)
-            result.append(side)
-    #else:
+print(maximum)
 
-
-
-
-#base가 될 수 있는 6가지 경우를 살펴본다.
-# result = []
-# for i in range(6):
-#     total = []
-#     base = dices[0][i]
-#     ref = [1,2,3,4,5,6]
-#     if i == 0 or i == 5:
-#         ref.remove(dices[0][0])
-#         ref.remove(dices[0][5])
-#     elif i == 2 or i == 4:
-#         ref.remove(dices[0][2])
-#         ref.remove(dices[0][4])
-#     else:
-#         ref.remove(dices[0][1])
-#         ref.remove(dices[0][3])
-#     first_side = max(ref)
-#     total.append(first_side)
-#     j = 1
-#     while j < num:
-#         temp = 0
-#         for k in range(6):
-#             if base == dices[j][k]:
-#                 ref = [1, 2, 3, 4, 5, 6]
-#                 if k == 0 or k == 5:
-#                     if k == 0:
-#                         base = dices[j][5]
-#                     else:
-#                         base = dices[j][0]
-#                     ref.remove(dices[j][0])
-#                     ref.remove(dices[j][5])
-#
-#                 elif k == 2 or k == 4:
-#                     if k == 2:
-#                         base = dices[j][4]
-#                     else:
-#                         base = dices[j][2]
-#                     ref.remove(dices[j][2])
-#                     ref.remove(dices[j][4])
-#                 else:
-#                     if k == 1:
-#                         base = dices[j][3]
-#                     else:
-#                         base = dices[j][1]
-#                     ref.remove(dices[j][1])
-#                     ref.remove(dices[j][3])
-#                 temp = max(ref)
-#         total.append(temp)
-#         j += 1
-#     result.append(total)
-#     i+=1
-#
-# final = 0
-# for i in result:
-#     if sum(i) > final:
-#         final = sum(i)
-#
-# print(final)
 ```
 
 
@@ -294,6 +227,29 @@ for i in range(1, 7):
 #### 2304. 창고 다각형
 
 ```python
+N = int(input())
+columns = []
+for _ in range(N):
+    temp= tuple(map(int, input().split()))
+    columns.append(temp)
+
+columns.sort(key= lambda x:x[0])
+
+area = 0
+for i in range(len(columns)-1):
+
+    heights = []
+    for j in range(i, len(columns)):
+        heights.append(columns[j][1])
+        if columns[j][1] > columns[i][1]:
+            this = columns[j][1]
+
+    if columns[i+1][1] > columns[i][1]:
+        x = columns[i + 1][0] - columns[i][0]
+        area += x * columns[i][1]
+
+
+
 
 ```
 
