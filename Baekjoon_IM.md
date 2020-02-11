@@ -420,6 +420,111 @@ for i in range(5):
 #### 10157. 자리배정
 
 ```python
+dx = [0, 1, 0, -1]
+dy = [1, 0, -1, 0]
+
+
+def solution(x, y, k):
+    seat_map = [[0 for _ in range(x)] for _ in range(y)]
+    cnt = 0
+    i = j = 0
+    flag = 0
+    while cnt <= x*y:
+        cnt += 1
+        if cnt == k:
+            return j+1, i+1
+        seat_map[i][j] = cnt
+        if flag % 2 == 0:
+            i += dy[flag]
+            if i + dy[flag] < 0 or i + dy[flag] >= y \
+                    or seat_map[i + dy[flag]][j]:
+                flag = (flag + 1) % 4
+        elif flag % 2 == 1:
+            j += dx[flag]
+            if j + dx[flag] < 0 or j + dx[flag] >= x or \
+                    seat_map[i][j + dx[flag]]:
+                flag = (flag + 1) % 4
+    return 0
+
+
+
+x, y = map(int, input().split())
+k = int(input())
+answer = solution(x, y, k)
+if answer:
+    print(*answer)
+else:
+    print(0)
+
+```
+
+```python
+dx = [0, 1, 0, -1]
+dy = [1, 0, -1, 0]
+
+
+n, m = map(int, input().split())
+k = int(input())
+
+c=[[False]*n for _ in range(m)]
+y = x-0
+c[y][x]=True
+d = 0
+res1 = res2 = 0
+
+if k>n*m :
+  print(0)
+else:
+  while cnt <= k:
+    ny, nx = y+dy[d], x+dx[d]
+    if cnt == k:
+      res2, res1 = y+1, x+1
+      break
+    if 0<=ny<=m and 0<=nx<n and not c[ny][nx]:
+      y, x = ny, nx
+      c[y][x] = True
+      cnt += 1
+    else:
+      d = (d+1)%4
+  print(res1, res2)
+```
+
+```python
+C, R = map(int,input().split())
+N = int(input())
+way = 'up'
+start_point = [1,1]
+turn = 0
+if N > C*R:
+    print(0)
+else:
+    for _ in range(N-1):
+        if way == 'up':
+            if start_point[1] + 1 > R - turn:
+                start_point[0] += 1
+                way = 'right'
+            else:
+                start_point[1] += 1
+        elif way == 'down':
+            if start_point[1] - 1 < 1 + turn:
+                start_point[0] -= 1
+                turn += 1
+                way = 'left'
+            else:
+                start_point[1] -= 1
+        elif way == 'right':
+            if start_point[0] + 1 > C - turn:
+                start_point[1] -= 1
+                way = 'down'
+            else:
+                start_point[0] += 1
+        elif way == 'left':
+            if start_point[0] - 1 < 1 + turn:
+                start_point[1] += 1
+                way = 'up'
+            else:
+                start_point[0] -= 1
+    print(*start_point)
 
 ```
 
@@ -441,9 +546,10 @@ arr = [[0]*101 for _ in range(101)]
 
 for i in range(1, T+1):
     r1, c1, r2, c2 = map(int, input().split())
-    for k in range(r1, r2+1):
-        for l in range(c1, c2+1):
+    for k in range(r1, r1+r2):
+        for l in range(c1, c1+c2):
             arr[k][l] = i
+
 
 for i in range(1, T+1):
     count = 0
@@ -451,7 +557,11 @@ for i in range(1, T+1):
         for l in range(101):
             if arr[k][l] == i:
                 count += 1
-    print(count)
+    if count == 0:
+        print(0)
+    else:
+        print(count)
+
 
 ```
 
@@ -733,5 +843,44 @@ else:
     
     print(max(countings))
 
+```
+
+
+
+### 달팽이배열
+
+```python
+#C는 가로길이, R은 세로길이
+#시계방향 90도 회전시 R은 세로길이, C는 가로길이
+Col, Row = map(int, input().split())
+C = Col
+R = Row
+arr = [[0] * R for _ in range(C)]
+count = 0
+offset = 0
+
+#시계방향 90도 회전시 R은 세로길이, C는 가로길이
+while C > 0 and R > 0:
+    for i in range(offset + R - 2, offset - 1, -1):
+        count += 1
+        arr[i][offset]=count
+    for i in range(offset + C - 2, offset, -1):
+        count += 1
+        arr[offset][i] = count
+
+    for i in range(offset, offset + R):
+        count += 1
+        arr[i][offset+R-1] = count
+
+    for i in range(offset + 1, offset + C):
+        count += 1
+        arr[offset+C-1][i] = count
+
+
+    offset += 1
+    R -= 2
+    C -= 2
+
+find_num = int(input())
 ```
 

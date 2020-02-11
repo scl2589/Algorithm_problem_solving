@@ -4,7 +4,6 @@
 
 ```python
 trial = int(input())
-
 for i in range(trial):
     n, m = map(int, input().split(' '))
     list1 = []
@@ -468,7 +467,7 @@ for tc in range(1, T+1):
 N개의 정수가 주어지면 가장 큰 수, 가장 작은 수, 2번째 큰 수, 2번째 작은 수 식으로 큰 수와 작은 수를 번갈아 정렬하는 방법이다.
 
 예를 들어 1부터 10까지 10개의 숫자가 주어지면 다음과 같이 정렬한다.
- 
+
 
 10 1 9 2 8 3 7 4 6 5
 
@@ -1044,7 +1043,49 @@ for tc in range(1, 11):
 #### 1216. 회문2
 
 ```python
+for tc in range(1, 11):
+    trial = input()
+    arr = []
+    for i in range(100):
+        temp = list(input())
+        arr.append(temp)
 
+    # 가로를 살펴보자
+    maxlength = 0
+    for horizontal in range(len(arr)):
+        # 단어의 길이를 설정
+        for length in range(1, 101):
+            # 시작 위치 설정
+            for j in range(100 - length + 1):
+                word = arr[horizontal][j: j + length]
+                # Palindrome 체크
+                if word == word[::-1]:
+                    if len(word) > maxlength:
+                        maxlength = length
+                        break
+
+
+    # 세로를 살펴보자
+    for vertical in range(len(arr)):
+
+        # 단어의 길이를 설정
+        for length in range(1, 101):
+
+            # 시작 위치 설정
+            for j in range(100 - length + 1):
+                word = ''
+
+                for each in range(0, length):
+                    word += arr[j + each][vertical]
+                
+                #Palindrome 체크
+                if word == word[::-1]:
+                    if len(word) > maxlength:
+                        maxlength = length
+                        break
+
+
+    print('#{} {}'.format(tc,maxlength))
 ```
 
 
