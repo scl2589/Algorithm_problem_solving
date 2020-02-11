@@ -253,11 +253,74 @@ for i in range(len(columns)-1):
 
 ```
 
+```python
+N = int(input())
+columns = []
+for _ in range(N):
+    temp= tuple(map(int, input().split()))
+    columns.append(temp)
+
+columns.sort(key= lambda x:x[0])
+
+increasing = [columns[0]]
+maximum = 0
+
+
+for i in range(1, len(columns)):
+    if columns[i][1] > maximum:
+        increasing.append(columns[i])
+        maximum = columns[i][1]
+    elif i == len(columns)-1:
+        increasing.append(columns[i])
+print(increasing)
+
+area = 0
+for i in range(len(increasing)-1):
+    for j in range(i+1, len(increasing)):
+        #heights.append(columns[j][1])
+        # if columns[j][1] > columns[i][1]:
+        #     this = columns[j][1]
+        if increasing[j][1] > increasing[i][1]:
+            x = increasing[j][0] - increasing[i][0]
+            area += x * increasing[i][1]
+            break
+        elif increasing[j][1] < increasing[i][1]: ### 확인 필요...
+            area += 1 * increasing[i][1]
+            if j == len(increasing)-1:
+                area += increasing[j][1] * (increasing[j][0]- increasing[i][0])
+                break
+
+print(area)
+
+
+
+```
+
 
 
 #### 2559. 수열
 
 ```python
+N, K = map(int, input().split())
+arr = list(map(int, input().split()))
+
+arr2 = arr[0 : K]
+total = sum(arr2)
+
+
+if N == K:
+    print(total)
+else:
+    maximum = total
+    for i in range(K, N):
+        arr2.append(arr[i])
+        total += arr[i]
+        total -= arr2[0]
+        del arr2[0]
+        if total > maximum:
+            maximum = total
+
+    print(maximum)
 
 ```
 
@@ -266,6 +329,73 @@ for i in range(len(columns)-1):
 #### 2578. 빙고
 
 ```python
+bingo = [list(map(int, input().split())) for _ in range(5)]
+numbers = [list(map(int, input().split())) for _ in range(5)]
+
+def find_bingo(bingo):
+    total_bingo = 0
+    shout_out_bingo = False
+    #가로 체크하기
+    for a in range(5):
+        count_0 = 0
+        for b in range(5):
+            if bingo[a][b] == 0:
+                count_0 += 1
+        if count_0 == 5:
+            total_bingo += 1
+
+    #세로 체크하기
+    for b in range(5):
+        count_0 = 0
+        for a in range(5):
+            if bingo[a][b] == 0:
+                count_0 += 1
+        if count_0 == 5:
+            total_bingo += 1
+
+    #대각선 체크하기 (왼 --> 오)
+    count_0 = 0
+    for a in range(5):
+        if bingo[a][a] == 0:
+            count_0 += 1
+    if count_0 == 5:
+        total_bingo += 1
+
+    #대각선 체크하기 (오 --> 왼)
+    count_0 = 0
+    for a in range(4,-1, -1):
+        if bingo[4-a][a] == 0:
+            count_0 += 1
+    if count_0 == 5:
+        total_bingo += 1
+
+
+
+    #빙고인지 확인하기
+    if total_bingo >= 3:
+        shout_out_bingo = True
+
+    return shout_out_bingo
+
+
+
+count = 0
+for i in range(5):
+    for j in range(5):
+        count += 1
+        call = numbers[i][j]
+        for k in range(5):
+            for l in range(5):
+                if bingo[k][l] == call:
+                    bingo[k][l] = 0
+                    break
+        result = find_bingo(bingo)
+        if result:
+            print(count)
+            break
+    if result:
+        break
+
 
 ```
 
@@ -306,6 +436,22 @@ for i in range(len(columns)-1):
 #### 10163. 색종이
 
 ```python
+T = int(input())
+arr = [[0]*101 for _ in range(101)]
+
+for i in range(1, T+1):
+    r1, c1, r2, c2 = map(int, input().split())
+    for k in range(r1, r2+1):
+        for l in range(c1, c2+1):
+            arr[k][l] = i
+
+for i in range(1, T+1):
+    count = 0
+    for k in range(101):
+        for l in range(101):
+            if arr[k][l] == i:
+                count += 1
+    print(count)
 
 ```
 
@@ -314,6 +460,29 @@ for i in range(len(columns)-1):
 #### 13300. 방 배정
 
 ```python
+import math
+
+#N = 학생 수를 말하며 k는 방의 최대인원수를 말한다
+N, K = map(int, input().split())
+students = []
+for i in range(N):
+    students.append(tuple(map(int, input().split())))
+
+dictionary = {}
+for i in students:
+    if i in dictionary:
+        dictionary[i] += 1
+    else:
+        dictionary[i] = 1
+
+counts = dictionary.values()
+room = 0
+for i in counts:
+    room += math.ceil(i/ K)
+
+print(room)
+
+
 
 ```
 
@@ -322,6 +491,26 @@ for i in range(len(columns)-1):
 #### 14696. 딱지놀이
 
 ```python
+T = int(input())
+#A,B의 카드를 받자
+A= []
+B = []
+for _ in range(T):
+    A.append(list(map(int, input().split())))
+    B.append(list(map(int, input().split())))
+
+for i in range(T):
+    cards_A= A[i][1:]
+    cards_B= B[i][1:]
+    for j in range(4, 0, -1):
+        if cards_A.count(j) > cards_B.count(j):
+            print('A')
+            break
+        elif cards_A.count(j) < cards_B.count(j):
+            print('B')
+            break
+        if j == 1:
+            print('D')
 
 ```
 
@@ -330,7 +519,32 @@ for i in range(len(columns)-1):
 #### 2309. 일곱 난쟁이
 
 ```python
+import itertools
+heights = [int(input()) for i in range(9)]
+cmb = []
+cmb += itertools.combinations(heights, 7)
 
+for i in cmb:
+    if sum(i) == 100:
+        valid_combos = sorted(list(i))
+
+for i in valid_combos:
+    print(i)
+```
+
+
+
+```python
+import itertools
+heights = [int(input()) for i in range(9)]
+cmb = []
+cmb += itertools.combinations(heights, 7)
+
+valid_combos = [sorted(list(i)) for i in cmb if sum(i)==100]
+
+answer = valid_combos[0]
+for i in range(len(answer)):
+    print(answer[i])
 ```
 
 
@@ -338,6 +552,22 @@ for i in range(len(columns)-1):
 #### 2605. 줄 세우기
 
 ```python
+N = int(input())
+order = map(int,input().split())
+result = []
+for idx, value in enumerate(order):
+    if idx == 0:
+        result.append(idx+1)
+    else:
+        if value == 0:
+            result.append(idx+1)
+        else:
+            pos = -1 - value +1
+            result.insert(pos,idx + 1)
+
+print(*result)
+
+
 
 ```
 
@@ -346,7 +576,27 @@ for i in range(len(columns)-1):
 #### 2563. 색종이
 
 ```python
+N = int(input())
+arr = []
+for i in range(100):
+    temp = [0] * 100
+    arr.append(temp)
 
+for _ in range(N):
+    x, y = map(int, input().split())
+    for i in range(y, y+10):
+        for j in range(x, x+10):
+            arr[i][j] += 1
+
+original_area = N * 100
+
+count = 0
+for i in range(100):
+    for j in range(100):
+        if arr[i][j] >= 1:
+            count += 1
+
+print(count)
 ```
 
 
@@ -354,14 +604,134 @@ for i in range(len(columns)-1):
 #### 2564. 경비원
 
 ```python
+c, r = map(int, input().split())
+num_of_stores = int(input())
+store_location = []
+for i in range(num_of_stores):
+    store_location.append(list(map(int, input().split())))
+
+my_location = list(map(int,input().split()))
+
+if my_location[0] == 1:
+    my_pos = [0, my_location[1]]
+
+elif my_location[0] == 2:
+    my_pos = [r, my_location[1]]
+
+elif my_location[0] == 3:
+    my_pos = [my_location[1], 0]
+
+elif my_location[0] == 4:
+    my_pos = [my_location[1], c]
+
+
+total = 0
+for each in store_location:
+    if each[0] == 1:
+        store_pos = [0, each[1]]
+        if my_pos[0] == r:
+            one = my_pos[0] + my_pos[1] + store_pos[1]
+            two = my_pos[0] + c-my_pos[1] + c- store_pos[1]
+            if one>two:
+                total += two
+            else:
+                total += one
+        else:
+            total += abs(my_pos[0]-store_pos[0]) + abs(my_pos[1]-store_pos[1])
+
+
+    elif each[0]== 2:
+        store_pos = [r, each[1]]
+        if my_pos[0] == 0:
+            one = store_pos[0] + my_pos[1] + store_pos[1]
+            two = store_pos[0] + c - my_pos[1] + c - store_pos[1]
+            if one > two:
+                total += two
+            else:
+                total += one
+        else:
+            total += abs(my_pos[0] - store_pos[0]) + abs(my_pos[1] - store_pos[1])
+
+
+    elif each[0] == 3:
+        store_pos = [each[1],0]
+        total += abs(my_pos[0] - store_pos[0]) + abs(my_pos[1] - store_pos[1])
+
+    elif each[0]==4:
+        store_pos = [each[1],c]
+        total += abs(my_pos[0] - store_pos[0]) + abs(my_pos[1] - store_pos[1])
+
+print(total)
 
 ```
+
+```python
+def convert(col,row,direc,dis):
+    p=dis
+    if direc==2:
+        p=2*col+row-dis
+    if direc==3:
+        p=2*(col+row)-dis
+    if direc==4:
+        p+=col
+    return p
+col, row=map(int, input().split())
+N=int(input())
+stores=[]
+for _ in range(N):
+    direc,dis= list(map(int,input().split()))
+    p=convert(col,row,direc,dis)
+    stores.append(p)
+dong_dir, dong_dis=map(int,input().split())
+dong=convert(col,row,dong_dir,dong_dis)
+total=0
+for i in range(N):
+    a=abs(stores[i]-dong)
+    b=2*(col+row)-a
+    total+=min(a,b)
+print(total)
+```
+
+
 
 
 
 #### 2491. 수열
 
 ```python
+N = int(input())
+nums = list(map(int, input().split()))
+
+count = 1
+countings = []
+
+if N == 1:
+    print(1)
+else:
+    increasing = True
+    for i in range(N-1):
+        if nums[i+1] >= nums[i]:
+            if increasing:
+                count += 1
+        else:
+            countings.append(count)
+            count = 1
+        if i == len(nums)-2:
+            countings.append(count)
+    
+    decreasing = True
+    for i in range(N-1):
+        if nums[i+1] <= nums[i]:
+            if decreasing:
+                count += 1
+        else:
+            countings.append(count)
+            count = 1
+        if i == len(nums)-2:
+            countings.append(count)
+    
+    
+    print(max(countings))
 
 ```
 
