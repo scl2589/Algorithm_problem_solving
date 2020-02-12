@@ -930,7 +930,34 @@ for tc in range(1, trial + 1):
 
 ```
 
+```python
+T= int(input())
 
+for tc in range(1,T+1):
+    N = int(input())
+    arr = [list(input()) for _ in range(N)]
+    total = 0
+    center = N//2
+
+    for i in range(N):
+        total += int(arr[i][center])
+        if 1 <= i <= N//2:
+            for j in range(1, i+1):
+                # print(arr[i][center+i])
+                # print(arr[i][center-i])
+                total += int(arr[i][center+j])
+                total += int(arr[i][center-j])
+        elif N//2 < i < N-1:
+            for j in range(N-i-1,0,-1):
+                # print(arr[i][center + i])
+                # print(arr[i][center - i])
+                total += int(arr[i][center+j])
+                total += int(arr[i][center-j])
+
+
+    print('#{} {}'.format(tc, total))
+
+```
 
 
 
