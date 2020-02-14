@@ -1,19 +1,16 @@
 from collections import deque
 def solution(arrangement):
+    stack = 0
     answer = 0
-    stack = deque()
-    count = 0
-    for i in arrangement:
-        if i == '(':
-            stack.append(i)
-        else:
-            if stack[-1] == i:
-                if len(stack) > 2:
-                    count += 1
-                stack.pop()
+    for index, i in enumerate(arrangement):
+        if i == ')': #rasor 닫는 괄호
+            stack -= 1
+            if arrangement[index-1] == ')': #rasor 다음 닫는 괄호
+                answer += 1
             else:
-                answer += len(stack) * (count+1)
-                count = 0
+                answer += stack
             
+        else:
+            stack += 1
     
     return answer
