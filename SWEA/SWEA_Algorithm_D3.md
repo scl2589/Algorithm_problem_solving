@@ -1020,7 +1020,60 @@ for tc in range(1, trial + 1):
 
 
 
-### 1
+### 1220. Magnetic
+
+```python
+for tc in range(1, 11):
+    N = int(input())
+    arr = [list(map(int, input().split())) for _ in range(N)]
+
+    count = 0
+
+    #세로로 살펴본다
+    for j in range(len(arr)):
+        stack = []
+        for i in range(len(arr)):
+            # 테이블 위에서 1과 2인 숫자들을 따로 stack에 넣어준다.
+            if arr[i][j] != 0:
+                stack.append(arr[i][j])
+
+        #k가 스택의 인덱스이다
+        k = 0
+
+        #스텍의 끝까지 도달할 때 까지:
+        while True:
+            #만약 1이라면, 2를 발견할 때까지 찾아준다.
+            if stack[k] == 1:
+                #현재 index 다음 숫자부터 찾아보며 2가 있는지 살펴본다
+                for l in range(k+1, len(stack)):
+                    #2가 있다면 교착상태 counting을 하고, 현재 index를 2가 있는 index와 바꿔치기한다
+                    if stack[l] == 2:
+                        count += 1
+                        k = l
+                        break
+                    #만약 끝까지 도달했다면, 현재 index와 끝 index와 바꿔치기 해준다.
+                    if l == len(stack)-1:
+                        k = l
+                        break
+
+            #2가 나온다면 다음 index로 넘어간다.
+            else:
+                k += 1
+
+            #만약 스택의 길이만큼 도달했다면 break해준다.
+            if k == len(stack)-1:
+                break
+
+    print('#{} {}'.format(tc, count))
+
+
+```
+
+
+
+
+
+### 5607. 조합
 
 ```python
 
@@ -1033,16 +1086,6 @@ for tc in range(1, trial + 1):
 ### 5607. 조합
 
 ```python
-ㅇ
-```
 
-
-
-
-
-### 5607. 조합
-
-```python
-ㅇ
 ```
 
