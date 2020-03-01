@@ -1,5 +1,5 @@
-import sys
-sys.stdin = open('input.txt')
+# import sys
+# sys.stdin = open('input.txt')
 from copy import deepcopy
 
 
@@ -59,43 +59,41 @@ def top_rotate(arr):
 dx = [-1, 0, 1, 0]
 dy = [0, 1, 0, -1]
 
-trial = int(input())
-for tc in range(1, trial+1):
-    R, C, T = map(int, input().split())
-    room = [list(map(int, input().split())) for _ in range(R)]
+R, C, T = map(int, input().split())
+room = [list(map(int, input().split())) for _ in range(R)]
+copied_room = deepcopy(room)
+
+#공기 청정기 위쪽 위치 파악
+for i in range(R):
+    if room[i][0] == -1:
+        purifier_i = i
+        break
+
+for _ in range(T):
+    room = deepcopy(copied_room)
     copied_room = deepcopy(room)
-
-    #공기 청정기 위쪽 위치 파악
+    #미세먼지 확산 구간
     for i in range(R):
-        if room[i][0] == -1:
-            purifier_i = i
-            break
+        for j in range(C):
+            if room[i][j] != -1 and room[i][j] != 0:
+                cnt = 0
+                for k in range(4):
+                    nx = i + dx[k]
+                    ny = j + dy[k]
+                    if 0 <= nx < R and 0 <= ny < C:
+                        if room[nx][ny] != -1:
+                            copied_room[nx][ny] += room[i][j]//5
+                            cnt += 1
+                copied_room[i][j] -= ((room[i][j]//5) * cnt)
 
-    for _ in range(T):
-        room = deepcopy(copied_room)
-        copied_room = deepcopy(room)
-        #미세먼지 확산 구간
-        for i in range(R):
-            for j in range(C):
-                if room[i][j] != -1 and room[i][j] != 0:
-                    cnt = 0
-                    for k in range(4):
-                        nx = i + dx[k]
-                        ny = j + dy[k]
-                        if 0 <= nx < R and 0 <= ny < C:
-                            if room[nx][ny] != -1:
-                                copied_room[nx][ny] += room[i][j]//5
-                                cnt += 1
-                    copied_room[i][j] -= ((room[i][j]//5) * cnt)
+    #공기청정기 작동 구간
+    room = top_rotate(copied_room)
 
-        #공기청정기 작동 구간
-        room = top_rotate(copied_room)
+    total = 0
 
-        total = 0
+    for i in range(R):
+        for j in range(C):
+            if room[i][j]!=0 and room[i][j]!=-1:
+                total += room[i][j]
 
-        for i in range(R):
-            for j in range(C):
-                if room[i][j]!=0 and room[i][j]!=-1:
-                    total += room[i][j]
-
-    print(total)
+print(total)
