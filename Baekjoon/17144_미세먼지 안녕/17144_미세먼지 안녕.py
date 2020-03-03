@@ -2,7 +2,6 @@
 # sys.stdin = open('input.txt')
 from copy import deepcopy
 
-
 def top_rotate(arr): 
     #공기청정기 위쪽 구역 (반시계)
     #위쪽줄
