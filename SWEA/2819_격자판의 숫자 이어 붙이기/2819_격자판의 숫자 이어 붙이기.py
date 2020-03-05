@@ -1,3 +1,4 @@
+#내 버전
 def f(i, j, index, temp):
     if index == 6:
         result.add(temp)
