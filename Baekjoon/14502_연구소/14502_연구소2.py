@@ -1,8 +1,8 @@
 N, M = map(int, input().split())
 board = [list(map(int, input().split())) for _ in range(N)]
 
-di = [1, 0, -1, 0]
-dj = [0, 1, 0, -1]
+dr = [1, 0, -1, 0]
+dc = [0, 1, 0, -1]
 
 def dfs(area):
     dr = [-1, 1, 0, 0]
@@ -25,22 +25,19 @@ def dfs(area):
                 stack.append((nr, nc))
 
 def comb(arr, idx, cnt): #1차원 배열의 조합을 구하기 위한 함수
+    global max_area
     if cnt == 3: #모든 경우의 수를 구했으니, 더 이상 진행할 필요 없음
         #원래 보드에 벽을 세우면 안되니까 새로운 보드에 벽을 세운다.
         #tmpboard = board.copy() 얕은 복사이기 때문에 안됨 >> 깊은 복사 필요
-        tmpboard = list()
+        tmp_board = list()
         for b in board:
-            #tmpboard.append([l for l in b])
-            tmplist=list()
-            for e in b:
-                tmplist.append(e)
-            tmpboard.append(tmplist)
+            tmp_board.append([l for l in b])
 
         for i in range(len(arr)):
             if arr[i] == 1:
                 r = i // M
                 c = i % M
-                tmpboard[r][c] = 1
+                tmp_board[r][c] = 1
         # 반복문이 끝이 나면 임의의 세개의 벽을 세운 상황
         # 바이러스 퍼뜨리기 (dfs로 진행할 수 있는 모든 빈 칸에 바이러스 만들기)
         dfs(tmp_board)
@@ -62,7 +59,7 @@ def comb(arr, idx, cnt): #1차원 배열의 조합을 구하기 위한 함수
     #경우의 수를 줄여 줍시다!
     tmpr = idx // M
     tmpc = idx % M
-    if arr[tmpr][tmpc] == 0:
+    if board[tmpr][tmpc] == 0:
         arr[idx] = 1
         comb(arr, idx+1, cnt+1)
     #아래는 인덱스의 요소를 사용하지 않는다고 결정
