@@ -1,6 +1,6 @@
 class Node:
-    def __init__(self, d=0, n = None):
-        self.data = d
+    def __init__(self, data=0, n = None):
+        self.data = data
         self.next = n
 
 
@@ -35,25 +35,16 @@ class LinkedList():
             self.insertLast(node)
         else:
             pre, cur = None, self.head
-            for _ in range(self.size):
+            for _ in range(idx-1):
                 pre = cur
                 cur = cur.next
                 self.size += 1
 
     def printidx(self, idx):
-        if self.head is None:
-            return
-        cnt, cur = 0, self.head
-        while cur is not None:
-            if cnt <= idx:
-                cur = cur.next
-                cnt += 1
-            else:
-                return cur.node
-        if self.head == cur:
-            return cnt
-        if cur is None:
-            return cnt
+        cur = self.head
+        for _ in range(idx):
+            cur = cur.next
+        return cur.data
 
 
 T = int(input())
