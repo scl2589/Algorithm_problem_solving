@@ -11,19 +11,18 @@
 # 방법 2
 N, M = map(int, input().split())
 arr = [i for i in range(1, N+1)]
-visited = [False] * N 
+s = []
 
-def backtracking(n, k, ans):
-    global visited
-    if n == k:
-        print(ans)
+def backtracking():
+    if len(s) == M:
+        print(*s)
         return 
-    for i in range(len(visited)):
-        if not visited[i]:
-            visited[i] = True
-            backtracking(n+1, k, ans.append(arr[i]))
-            visited[i] = False 
-            backtracking(n, k, ans)
+    for i in range(1, N+1):
+        if i in s:
+            continue 
+        s.append(i)
+        backtracking()
+        s.pop() 
 
 
-backtracking(0, M, [])
+backtracking()
