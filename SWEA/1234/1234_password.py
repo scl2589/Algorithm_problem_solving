@@ -18,3 +18,5 @@ for tc in range(1, 11):
             result = False
 
     print('#{} {}'.format(tc,''.join(nums)))
+
+# example
