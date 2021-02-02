@@ -1,3 +1,4 @@
+# 시간초과
 '''
 세로 N, 가로 M 크기의 집터 
 집터 맨 왼쪽 위 좌표 (0, 0)
@@ -51,3 +52,72 @@ for h in range(min_land, max_land + 1):
             answer = h 
 
 print(count, answer)
+
+# 시간초과 2
+import sys
+N, M, B = map(int, sys.stdin.readline().split())
+land = []
+for _ in range(N):
+    land.extend(map(int, input().split()))
+
+height = 0
+ans = 1000000000000000000000000000000
+
+for i in range(256):
+    max_land = 0
+    min_land = 0
+    for block in land: 
+        # 현재 블록이 기준보다 작다면 인벤토리에서 제외하여 블록 위에 몇개를 놓아야 하는지 센다.
+        if block < i: 
+            min_land += (i-block)
+        # 현재 블록이 기준보다 크다면 인벤토리에 몇개를 넣어야 하는지 센다.
+        else:
+            max_land += (block - i)
+    # 저장소에 있는 개수는 인벤토리의 수 + 인벤토리에 넣은 개수를 합한 값이다.
+    inventory = max_land + B
+    # 만약 인벤토리에서 제외한 값이 저장소에 있는 값보다 크다면.. 컨티뉴
+    if inventory < min_land:
+        continue
+    #시간을 계산한다 
+    time = 2 * max_land + min_land
+    if time <= ans:
+    # 시간이 같을 때는 높이가 높은 순으로 출력하라는 조건에 맞게
+    # for i in range(257)은 항상 i가 오름차순으로 돌기 때문에
+    # 시간이 같아도 최종적으로는 높이가 높은 순으로 나오게 된다
+        ans = time
+        height = i
+print(ans, height)
+
+
+#진짜 답안 
+from collections import Counter
+
+
+def make_land(height):
+	sec = 0
+	for key in land:
+		if key < height:
+			sec += (height - key) * land[key]
+		elif key > height:
+			sec += (key - height) * 2 * land[key]
+	return sec
+
+
+n, m, inven = map(int, input().split())
+land = []
+for _ in range(n):
+	land += map(int, input().split())
+
+_sum, _len = sum(land), n * m
+land = dict(Counter(land))
+height, min_sec = 0, 100000000000000
+
+for i in range(257):
+
+	if _len * i <= _sum + inven:
+		sec = make_land(i)
+		if sec <= min_sec:
+			min_sec = sec
+			height = i
+
+print(min_sec, height)
