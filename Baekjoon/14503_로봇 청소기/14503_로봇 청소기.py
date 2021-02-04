@@ -28,12 +28,23 @@ dir = {
     # 서쪽
     3: [1, 0]
 }
+
+back = {
+    # 북쪽 
+    0: [1, 0],
+    # 동쪽
+    1: [0, -1],
+    # 남쪽
+    2: [-1, 0],
+    # 서쪽
+    3: [0, 1]
+}
 N, M = map(int, input().split())
 r, c, d = map(int, input().split())
 arr = [list(map(int, input().split())) for _ in range(N)]
 
-r -= 1
-c -= 1
+# r -= 1
+# c -= 1
 
 # 현재 위치를 청소한다.
 arr[r][c] = -1
@@ -44,32 +55,38 @@ for j in arr:
 
 while True:
     # 현재 방향 기준으로 왼족 방향부터 진행
+    flag = False
     for _ in range(4): 
         ni = r + dir[d][0]
         nj = c + dir[d][1]
+        d  = (d-1) % 4
         # 왼쪽 방향에 아직 청소하지 않은 공간이 존재한다면? 
         if 0 <= ni < N and 0 <= nj < M and arr[ni][nj] == 0:
             print("뿅", ni, nj, d)
             # 청소한 칸으로 변경 
             arr[ni][nj] = -1
             answer += 1
-            d  = (d-1) % 4
             r, c = ni, nj 
+            flag = True 
             break 
         # 왼쪽 방향에 청소할 공간이 없다면 그 방향으로 회전하기. 
-        if 0 <= ni < N and 0 <= nj < M and arr[ni][nj] != 0:
+        # if 0 <= ni < N and 0 <= nj < M and arr[ni][nj] != 0:
+        #     print("제자리 회전~~", ni, nj)
+        #     d = (d-1) % 4
+        else:
             print("제자리 회전~~", ni, nj)
-            d = (d-1) % 4
+            continue
             
     # 네 방향 이미 청소되어 있거나 벽인 경우, 
-    else:
+    if not flag:
         # 바라보는 방향 유지 후 
-        ni = r + dir[d][1] 
-        nj = c + dir[d][0]
+        ni = r + back[d][0] 
+        nj = c + back[d][1]
         # 후진이 가능하다면 한 칸 후진 
         if 0 <= ni < N and 0 <= nj < M and arr[ni][nj] == 0:
             arr[ni][nj] = -1
             answer += 1
+            r,c = ni, nj
         else:
             # 4개 방향 모두 (청소 or 벽) And 뒤쪽 방향 (후진하는 곳)도 벽이면 작동을 멈춘다. 
             print("으악", ni, nj)
