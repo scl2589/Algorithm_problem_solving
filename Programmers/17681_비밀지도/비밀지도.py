@@ -28,6 +28,47 @@ def solution(n, arr1, arr2):
         answer.append(temp)
     return answer
 
+# 이전에 풀었던 코드
+def solution(n, arr1, arr2):
+    arr = [[0]* n for _ in range(n)]
+    list1 = []
+    list2 = []
+    for i in range(n):
+        remain1 = ""
+        remain2 = ""
+        num1 = arr1[i]
+        num2 = arr2[i]
+        # 이진수 구하기
+        for _ in range(n):
+            remain1 = str(num1 % 2) + remain1
+            num1 //= 2
+        # string을 리스트로 만들기
+        list1.append(list(map(int, list(remain1))))
+        # 이진수 구하기
+        for _ in range(n):
+            remain2 = str(num2 % 2) + remain2
+            num2 //= 2
+        # string을 리스트로 만들기
+        list2.append(list(map(int, list(remain2))))
+        
+    # 이진수 돌면서 벽 표시하기 
+    for i in range(n):
+        for j in range(n):
+            if list1[i][j] == 1 or list2[i][j]==1:
+                arr[i][j] = 1
+                
+    # 정답 배열 만들기
+    answer = []
+    for i in range(n):
+        string = ""
+        for j in arr[i]: 
+            if j == 1:
+                string += "#"
+            else:
+                string += " "
+        answer.append(string)
+    return answer
+
 # 더 효율적, 빠른 코드
 def solution(n, arr1, arr2):
     answer = []
