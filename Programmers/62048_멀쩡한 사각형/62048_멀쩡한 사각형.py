@@ -1,9 +1,7 @@
 import math
-
 def solution(w,h):
-    total = w * h
     count = w + h - math.gcd(w, h)
-    return total - count
+    return w * h - count
 
 
 '''
@@ -12,6 +10,6 @@ def solution(w,h):
 방법은 공약수 ^0^
  4:6, 6:9 경우 모두 2:3이 2번, 3번씩 반복되는데 이는 두 비의 최대 공약수이다.
  최대 공약수만큼 꼭지점에섬 만나게 되므로 
- 잘린 사각형의 개수는 (X * Y 전체 사각형의 수 - 꼭지점에서 만나게 되는 횟수 )
+ 잘린 사각형의 개수는 (X와 Y의 합 - 꼭지점에서 만나게 되는 횟수 )
  = X + Y - 두 수의 최대 공약수 
 '''
