@@ -39,3 +39,16 @@ T: 15
 테스트 12 〉	통과 (0.02ms, 10.3MB)
 테스트 13 〉	통과 (0.02ms, 10.2MB)
 '''
+
+# 더 짧은 코드 작성!
+import math 
+def solution(brown, yellow):
+    answer = []
+    total = brown + yellow 
+    for i in range(3, math.ceil(total**0.5)+1):
+        if total % i == 0:
+            a, b = i, total//i
+            if (a - 2) * (b - 2) == yellow:
+                if b > a:
+                    a, b = b, a
+                return [a, b]
